@@ -1,4 +1,4 @@
-const Cart = ({ cards }) => {
+const Cart = ({ cards, removeHandle }) => {
   return (
     <>
       <div className="add-cart">
@@ -8,6 +8,7 @@ const Cart = ({ cards }) => {
             <div className="box" key={index}>
               <img src={cart.img} alt="" className="add-cart-img" />
               <p style={{ fontSize: "14px" }}>{cart.name}</p>
+              <button onClick={() => removeHandle(cart.id)}>Remove Cart</button>
             </div>
           ))}
         </div>

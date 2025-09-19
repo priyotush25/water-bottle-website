@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { addCartLS, getStoreCarts } from "../utilities/localstorage";
+import { addCartLS, getStoreCarts, removeLS } from "../utilities/localstorage";
 import Bottle from "./Bottle";
 import Cart from "./Cart";
 
@@ -25,7 +25,7 @@ const Bottles = () => {
       const storeCart = getStoreCarts();
 
       for (const id of storeCart) {
-        const bottle = bottles.find((bottle) => bottle.id === id);
+        const bottle = bottles.find((bottle) => bottle.id !== id);
         if (bottle) {
           saveCarts.push(bottle);
         }
@@ -34,11 +34,17 @@ const Bottles = () => {
     }
   }, [bottles]);
 
+  const removeHandle = (id) => {
+    const remainingCart = cards.filter((bottle) => bottle.id !== id);
+    setCards(remainingCart);
+    removeLS(id);
+  };
+
   return (
     <>
       <div>
         <h1>Bottles : {bottles.length}</h1>
-        <Cart cards={cards} />
+        <Cart cards={cards} removeHandle={removeHandle} />
       </div>
       <div className="bottle-box">
         {bottles.map((bottles) => (
